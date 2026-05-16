@@ -22,7 +22,7 @@ const content = {
     footer: "Dedicated to the one who defines 'Gorgeous'",
     traits: ["Pure Heart", "Elegant Soul", "Humble Spirit", "Natural Glow", "Kindness", "Radiance", "Incomparable", "Breathtaking", "Gentle Spirit"],
     personalNote: "To the most beautiful soul: Your presence is a gift, and your heart is a treasure. Never forget how much light you bring into this world.",
-    personalTitle: "A Message from the Heart",
+    personalTitle: "Abenezer's Message from the Heart",
     behaviorSections: [
       {
         title: "The Art of Humility",
@@ -134,18 +134,18 @@ const FloatingHearts = () => {
       {[...Array(15)].map((_, i) => (
         <motion.div
           key={i}
-          initial={{ 
-            opacity: 0, 
-            y: "100vh", 
+          initial={{
+            opacity: 0,
+            y: "100vh",
             x: Math.random() * 100 + "vw",
             scale: Math.random() * 0.5 + 0.5
           }}
-          animate={{ 
+          animate={{
             opacity: [0, 0.3, 0],
             y: "-10vh",
             x: (Math.random() * 100 - 50) + "vw"
           }}
-          transition={{ 
+          transition={{
             duration: Math.random() * 10 + 10,
             repeat: Infinity,
             delay: Math.random() * 20,
@@ -201,23 +201,21 @@ function App() {
 
       {/* Global Language Toggle - Fixed in Top Corner to prevent any overlap */}
       <div className="fixed top-6 right-6 z-[999] flex gap-3">
-        <button 
+        <button
           onClick={() => setLang('en')}
-          className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${
-            lang === 'en' 
-            ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(212,175,55,0.4)]' 
-            : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
-          }`}
+          className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${lang === 'en'
+              ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(212,175,55,0.4)]'
+              : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
+            }`}
         >
           EN
         </button>
-        <button 
+        <button
           onClick={() => setLang('am')}
-          className={`px-5 py-2 rounded-full border text-sm font-semibold amharic transition-all duration-300 ${
-            lang === 'am' 
-            ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(212,175,55,0.4)]' 
-            : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
-          }`}
+          className={`px-5 py-2 rounded-full border text-sm font-semibold amharic transition-all duration-300 ${lang === 'am'
+              ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(212,175,55,0.4)]'
+              : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
+            }`}
         >
           አማርኛ
         </button>
@@ -225,7 +223,7 @@ function App() {
 
       <AnimatePresence mode="wait">
         {!started ? (
-          <motion.div 
+          <motion.div
             key="splash"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -237,7 +235,7 @@ function App() {
               <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-[120px] animate-pulse" />
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-center z-10 p-12 glass-card max-w-xl w-full"
@@ -253,7 +251,7 @@ function App() {
                 {t.title}
               </h1>
               <p className="text-gray-400 mb-12 italic text-xl md:text-2xl">{t.subtitle}</p>
-              
+
               <div className="relative flex justify-center">
                 <AnimatePresence mode="wait">
                   {!loading ? (
@@ -280,7 +278,7 @@ function App() {
                         {t.loadingText}
                       </p>
                       <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden border border-white/5">
-                        <motion.div 
+                        <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${progress}%` }}
                           className="h-full bg-primary shadow-[0_0_15px_var(--primary)]"
@@ -293,7 +291,7 @@ function App() {
             </motion.div>
           </motion.div>
         ) : (
-          <motion.div 
+          <motion.div
             key="content"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -307,7 +305,7 @@ function App() {
 
             {/* Hero Section */}
             <section className="min-h-screen flex flex-col items-center justify-center px-4 relative">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
@@ -319,8 +317,8 @@ function App() {
                 </h2>
                 <div className="flex flex-wrap justify-center gap-4">
                   {t.traits.map((trait, i) => (
-                    <motion.span 
-                      key={i} 
+                    <motion.span
+                      key={i}
                       initial={{ opacity: 0, scale: 0 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.1 }}
@@ -331,8 +329,8 @@ function App() {
                   ))}
                 </div>
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 2 }}
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-50"
@@ -347,7 +345,7 @@ function App() {
             <section className="py-20 px-4">
               {t.storySections.map((section, idx) => (
                 <div key={idx} className="min-h-[50vh] flex items-center justify-center mb-24">
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
@@ -380,7 +378,7 @@ function App() {
               <div className="max-w-6xl mx-auto space-y-32">
                 {t.behaviorSections.map((section, i) => (
                   <div key={i} className="grid md:grid-cols-2 gap-12 items-center">
-                    <motion.div 
+                    <motion.div
                       initial={{ x: i % 2 === 0 ? -50 : 50, opacity: 0 }}
                       whileInView={{ x: 0, opacity: 1 }}
                       transition={{ duration: 0.8 }}
@@ -392,16 +390,16 @@ function App() {
                         {section.desc}
                       </p>
                     </motion.div>
-                    <motion.div 
+                    <motion.div
                       initial={{ x: i % 2 === 0 ? 50 : -50, opacity: 0 }}
                       whileInView={{ x: 0, opacity: 1 }}
                       transition={{ duration: 0.8 }}
                       className={`relative group ${i % 2 === 1 ? 'md:order-1' : ''}`}
                     >
                       <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-2xl group-hover:bg-primary/30 transition-all" />
-                      <img 
-                        src={section.image} 
-                        alt={section.title} 
+                      <img
+                        src={section.image}
+                        alt={section.title}
                         className="relative z-10 rounded-3xl border border-white/10 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] w-full aspect-[4/5] object-cover"
                       />
                     </motion.div>
@@ -416,7 +414,7 @@ function App() {
                 <h3 className={`text-4xl font-bold text-center mb-16 gold-text ${lang === 'am' ? 'amharic' : ''}`}>
                   {t.galleryTitle}
                 </h3>
-                
+
                 <div className="relative aspect-[4/5] md:aspect-video rounded-[2rem] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 bg-black">
                   <AnimatePresence mode="wait">
                     <div key={currentSlide} className="w-full h-full relative flex items-center justify-center">
@@ -437,9 +435,9 @@ function App() {
                       />
                     </div>
                   </AnimatePresence>
-                  
+
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  
+
                   <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/80 rounded-full backdrop-blur-md border border-white/10 transition-all">
                     <ChevronLeft size={24} />
                   </button>
@@ -452,7 +450,7 @@ function App() {
 
             {/* Personal Message */}
             <section className="py-32 px-4">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 className="max-w-3xl mx-auto glass-card border-pink-500/30 text-center relative overflow-hidden"
