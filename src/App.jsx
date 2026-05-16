@@ -173,6 +173,7 @@ function App() {
   const [started, setStarted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [hasPlayed, setHasPlayed] = useState(false);
   const [currentSong, setCurrentSong] = useState(romanticMusic[0]);
