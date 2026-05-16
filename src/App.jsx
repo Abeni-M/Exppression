@@ -10,7 +10,7 @@ const images = [
 ];
 
 const romanticMusic = [
-  { name: "Wubetena Kunjinash", url: "https://archive.org/download/mahmoudahmedsoul-of-addis/Mahmoud%20Ahmed%20-%20Soul%20Of%20Addis%20-%2001%20-%20Wubetena%20Kunjinash.mp3" },
+  { name: "Wubetena Kunjinash", url: "/music/wubetena_kunjinash.m4a" },
   { name: "Clair de Lune", url: "https://www.mfiles.co.uk/mp3-downloads/claude-debussy-clair-de-lune.mp3" },
   { name: "Moonlight Sonata", url: "https://www.mfiles.co.uk/mp3-downloads/beethoven-moonlight-sonata-1.mp3" },
   { name: "Chopin Nocturne", url: "https://www.mfiles.co.uk/mp3-downloads/chopin-nocturne-op9-no2.mp3" }
@@ -209,10 +209,14 @@ function App() {
     }, 100);
   };
 
-  const handleAudioError = () => {
-    console.log("Audio failed, trying next song...");
+  const handleNextSong = () => {
     const nextIndex = (romanticMusic.indexOf(currentSong) + 1) % romanticMusic.length;
     setCurrentSong(romanticMusic[nextIndex]);
+  };
+
+  const handleAudioError = () => {
+    console.log("Audio failed, trying next song...");
+    handleNextSong();
   };
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % images.length);
@@ -224,6 +228,13 @@ function App() {
       return () => clearInterval(interval);
     }
   }, [started]);
+
+  // Handle automatic playback when song changes
+  useEffect(() => {
+    if (hasPlayed && audioRef.current) {
+      audioRef.current.play().catch(e => console.log("Playback failed:", e));
+    }
+  }, [currentSong, hasPlayed]);
 
   // Handle first interaction to bypass autoplay restrictions
   useEffect(() => {
@@ -246,10 +257,10 @@ function App() {
     <div className="min-h-screen bg-black text-white selection:bg-pink-500/30 overflow-x-hidden relative">
       <audio 
         ref={audioRef}
-        loop
         preload="auto"
         onPlay={() => setHasPlayed(true)}
         onError={handleAudioError}
+        onEnded={handleNextSong}
         src={currentSong.url}
         crossOrigin="anonymous"
       />
