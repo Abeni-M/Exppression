@@ -23,6 +23,23 @@ const content = {
     traits: ["Pure Heart", "Elegant Soul", "Humble Spirit", "Natural Glow", "Kindness", "Radiance", "Incomparable", "Breathtaking", "Gentle Spirit"],
     personalNote: "To the most beautiful soul: Your presence is a gift, and your heart is a treasure. Never forget how much light you bring into this world.",
     personalTitle: "A Message from the Heart",
+    behaviorSections: [
+      {
+        title: "The Art of Humility",
+        desc: "Her beauty is not just in the way she looks, but in the way she makes others feel. A humble heart that touches everyone with kindness, carrying a grace that words can barely capture. She is a masterpiece of kindness and a beacon of pure light.",
+        image: images[3]
+      },
+      {
+        title: "The Light of Her Soul",
+        desc: "Beyond the physical beauty lies a radiance that never dims. Her spirit shines with a purity that inspires everyone around her to be better, kinder, and more loving.",
+        image: images[0]
+      },
+      {
+        title: "Strength in Gentleness",
+        desc: "There is a quiet strength in her soft words and gentle actions. She doesn't need to shout to be heard; her presence speaks volumes of her character and depth.",
+        image: images[1]
+      }
+    ],
     storySections: [
       {
         title: "Her Presence",
@@ -64,6 +81,23 @@ const content = {
     traits: ["ንፁህ ልብ", "የረቀቀች ነፍስ", "ትሑት መንፈስ", "ተፈጥर्याዊ ወጋገን", "ደግነት", "ብሩህነት", "አቻ የሌላት", "አስደናቂ", "ለስላሳ መንፈስ"],
     personalNote: "ለማንም ለማትመስለው ውብ ነፍስ፡ መኖርሽ ስጦታ ነው፣ ልብሽ ደግሞ ውድ ሀብት ነው። ለዚህ ዓለም የምታበረክቺው ብርሃን ምን ያህል ታላቅ እንደሆነ ፈጽሞ አትርሺ።",
     personalTitle: "ከልብ የመነጨ መልእክት",
+    behaviorSections: [
+      {
+        title: "የትህትና ጥበብ",
+        desc: "ውበቷ በገጽታዋ ብቻ ሳይሆን ሌሎችን በምታከብርበት መንገድ ጭምር ነው። በደግነት ሁሉንም የምትነካ ትሑት ልብ፤ በቃላት ሊገለጽ የማይችል ግርማ የተላበሰች። እሷ የደግነት ጥበብ እና የንጹህ ብርሃን ምንጭ ናት።",
+        image: images[3]
+      },
+      {
+        title: "የነፍሷ ብርሃን",
+        desc: "ከአካላዊ ውበት ባሻገር ፈጽሞ የማይደበዝዝ ብሩህነት አለ። መንፈሷ በዙሪያዋ ያሉ ሁሉ የተሻሉ፣ ደግ እና አፍቃሪ እንዲሆኑ በሚያነሳሳ ንፅህና ያበራል።",
+        image: images[0]
+      },
+      {
+        title: "ለስላሳ ጥንካሬ",
+        desc: "በለስላሳ ቃላቷ እና በረጋ መንፈሷ ውስጥ ታላቅ ጥንካሬ አለ። ለመሰማት መጮህ አያስፈልጋትም፤ መገኘቷ ብቻ ስለ ባህሪዋ እና ስለ ጥልቀቷ ብዙ ይናገራል።",
+        image: images[1]
+      }
+    ],
     storySections: [
       {
         title: "ግርማዋ",
@@ -343,26 +377,36 @@ function App() {
 
             {/* Behavior Section */}
             <section className="py-32 px-4 bg-gradient-to-b from-black to-zinc-900">
-              <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-                <motion.div 
-                  initial={{ x: -50, opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
-                  className="glass-card"
-                >
-                  <Sparkles className="text-pink-400 mb-6" />
-                  <h3 className={`text-4xl font-bold mb-6 ${lang === 'am' ? 'amharic' : ''}`}>{t.behaviorTitle}</h3>
-                  <p className={`text-xl text-gray-300 leading-relaxed ${lang === 'am' ? 'amharic' : ''}`}>
-                    {t.behaviorDesc}
-                  </p>
-                </motion.div>
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-2xl group-hover:bg-primary/30 transition-all" />
-                  <img 
-                    src={images[3]} 
-                    alt="Humble" 
-                    className="relative z-10 rounded-3xl border border-white/10 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]"
-                  />
-                </div>
+              <div className="max-w-6xl mx-auto space-y-32">
+                {t.behaviorSections.map((section, i) => (
+                  <div key={i} className="grid md:grid-cols-2 gap-12 items-center">
+                    <motion.div 
+                      initial={{ x: i % 2 === 0 ? -50 : 50, opacity: 0 }}
+                      whileInView={{ x: 0, opacity: 1 }}
+                      transition={{ duration: 0.8 }}
+                      className={`glass-card ${i % 2 === 1 ? 'md:order-2' : ''}`}
+                    >
+                      <Sparkles className="text-pink-400 mb-6" />
+                      <h3 className={`text-4xl font-bold mb-6 ${lang === 'am' ? 'amharic' : ''}`}>{section.title}</h3>
+                      <p className={`text-xl text-gray-300 leading-relaxed ${lang === 'am' ? 'amharic' : ''}`}>
+                        {section.desc}
+                      </p>
+                    </motion.div>
+                    <motion.div 
+                      initial={{ x: i % 2 === 0 ? 50 : -50, opacity: 0 }}
+                      whileInView={{ x: 0, opacity: 1 }}
+                      transition={{ duration: 0.8 }}
+                      className={`relative group ${i % 2 === 1 ? 'md:order-1' : ''}`}
+                    >
+                      <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-2xl group-hover:bg-primary/30 transition-all" />
+                      <img 
+                        src={section.image} 
+                        alt={section.title} 
+                        className="relative z-10 rounded-3xl border border-white/10 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] w-full aspect-[4/5] object-cover"
+                      />
+                    </motion.div>
+                  </div>
+                ))}
               </div>
             </section>
 
