@@ -159,13 +159,13 @@ const FloatingHearts = () => {
             ease: "linear"
           }}
           className={`absolute ${
-            i % 4 === 0 ? 'text-pink-500/20' : 
-            i % 4 === 1 ? 'text-red-500/20' : 
-            i % 4 === 2 ? 'text-yellow-500/20' : 
-            'text-purple-500/20'
+            i % 4 === 0 ? 'text-pink-500/50' : 
+            i % 4 === 1 ? 'text-red-500/50' : 
+            i % 4 === 2 ? 'text-yellow-500/50' : 
+            'text-purple-500/50'
           }`}
         >
-          <Heart size={Math.random() * 40 + 20} fill="currentColor" className="drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]" />
+          <Heart size={Math.random() * 50 + 30} fill="currentColor" className="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
         </motion.div>
       ))}
     </div>
