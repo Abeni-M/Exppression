@@ -275,7 +275,7 @@ function App() {
               <h1 className={`text-5xl md:text-7xl font-bold mb-6 gold-text leading-tight ${lang === 'am' ? 'amharic' : ''}`}>
                 {t.title}
               </h1>
-              <p className="text-gray-400 mb-12 italic text-xl md:text-2xl">{t.subtitle}</p>
+              <p className={`text-gray-400 mb-12 italic text-xl md:text-2xl ${lang === 'am' ? 'amharic' : ''}`}>{t.subtitle}</p>
 
               <div className="relative flex justify-center">
                 <AnimatePresence mode="wait">
@@ -287,7 +287,7 @@ function App() {
                       onClick={handleStart}
                       className="reveal-btn-pro group"
                     >
-                      <span className="relative z-10 flex items-center gap-3">
+                      <span className={`relative z-10 flex items-center gap-3 ${lang === 'am' ? 'amharic' : ''}`}>
                         {t.revealBtn} <Sparkles size={22} className="group-hover:rotate-12 transition-transform" />
                       </span>
                       <div className="shimmer" />
@@ -347,7 +347,7 @@ function App() {
                       initial={{ opacity: 0, scale: 0 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.1 }}
-                      className="px-6 py-2 rounded-full border border-pink-500/30 bg-pink-500/5 text-pink-300 font-medium"
+                      className={`px-6 py-2 rounded-full border border-pink-500/30 bg-pink-500/5 text-pink-300 font-medium ${lang === 'am' ? 'amharic' : ''}`}
                     >
                       {trait}
                     </motion.span>
