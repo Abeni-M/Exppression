@@ -10,11 +10,10 @@ const images = [
 ];
 
 const romanticMusic = [
-  { name: "Clair de Lune", url: "https://archive.org/download/DebussyClairDeLune/Debussy-ClairDeLune.mp3" },
-  { name: "Moonlight Sonata", url: "https://archive.org/download/BeethovenMoonlightSonata_201801/Beethoven%20-%20Moonlight%20Sonata%20%281st%20Movement%29.mp3" },
-  { name: "Chopin Nocturne", url: "https://archive.org/download/ChopinNocturneOp9No2/Chopin%20-%20Nocturne%20Op.%209%20No.%202.mp3" },
-  { name: "Gymnopédie No.1", url: "https://archive.org/download/GymnopedieNo.1/Satie%20-%20Gymnopedie%20No.1.mp3" },
-  { name: "Liebestraum No. 3", url: "https://archive.org/download/LisztLiebestraumNo.3/Liszt%20-%20Liebestraum%20No.3.mp3" }
+  { name: "Clair de Lune", url: "https://www.mfiles.co.uk/mp3-downloads/claude-debussy-clair-de-lune.mp3" },
+  { name: "Moonlight Sonata", url: "https://www.mfiles.co.uk/mp3-downloads/beethoven-moonlight-sonata-1.mp3" },
+  { name: "Chopin Nocturne", url: "https://www.mfiles.co.uk/mp3-downloads/chopin-nocturne-op9-no2.mp3" },
+  { name: "Gymnopédie No.1", url: "https://www.mfiles.co.uk/mp3-downloads/erik-satie-gymnopedie-1.mp3" }
 ];
 
 const content = {
@@ -206,6 +205,12 @@ function App() {
     }, 100);
   };
 
+  const handleAudioError = () => {
+    console.log("Audio failed, trying next song...");
+    const nextIndex = (romanticMusic.indexOf(currentSong) + 1) % romanticMusic.length;
+    setCurrentSong(romanticMusic[nextIndex]);
+  };
+
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % images.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
 
@@ -240,7 +245,9 @@ function App() {
         loop
         preload="auto"
         onPlay={() => setHasPlayed(true)}
+        onError={handleAudioError}
         src={currentSong.url}
+        crossOrigin="anonymous"
       />
       <div className="vignette" />
       <FloatingHearts />
