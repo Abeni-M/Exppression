@@ -158,9 +158,14 @@ const FloatingHearts = () => {
             delay: Math.random() * 20,
             ease: "linear"
           }}
-          className={`absolute ${Math.random() > 0.5 ? 'text-pink-500/20' : 'text-red-600/20'}`}
+          className={`absolute ${
+            i % 4 === 0 ? 'text-pink-500/20' : 
+            i % 4 === 1 ? 'text-red-500/20' : 
+            i % 4 === 2 ? 'text-yellow-500/20' : 
+            'text-purple-500/20'
+          }`}
         >
-          <Heart size={Math.random() * 40 + 20} fill="currentColor" />
+          <Heart size={Math.random() * 40 + 20} fill="currentColor" className="drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]" />
         </motion.div>
       ))}
     </div>
@@ -320,22 +325,6 @@ function App() {
               <p className={`text-gray-400 mb-12 italic text-xl md:text-2xl ${lang === 'am' ? 'amharic' : ''}`}>{t.subtitle}</p>
 
               <div className="flex flex-col items-center gap-6">
-                {!hasPlayed && (
-                  <motion.button
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    onClick={() => {
-                      audioRef.current?.play().then(() => setHasPlayed(true));
-                    }}
-                    className="flex flex-col items-center gap-2 px-6 py-3 bg-pink-500/10 text-pink-300 rounded-2xl border border-pink-500/20 hover:bg-pink-500/20 transition-all text-sm mb-4 backdrop-blur-sm"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Volume2 size={18} /> Tap to Hear: {currentSong.name}
-                    </div>
-                    <span className="text-[10px] opacity-50 uppercase tracking-widest">Romantic Classical Shuffle</span>
-                  </motion.button>
-                )}
-
                 <div className="relative flex justify-center w-full">
                 <AnimatePresence mode="wait">
                   {!loading ? (
