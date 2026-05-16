@@ -346,8 +346,9 @@ function App() {
                   )}
                 </AnimatePresence>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
+        </motion.div>
         ) : (
           <motion.div
             key="content"
