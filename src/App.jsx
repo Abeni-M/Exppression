@@ -151,7 +151,7 @@ const FloatingHearts = () => {
             delay: Math.random() * 20,
             ease: "linear"
           }}
-          className="absolute text-pink-500/20"
+          className={`absolute ${Math.random() > 0.5 ? 'text-pink-500/20' : 'text-red-600/20'}`}
         >
           <Heart size={Math.random() * 40 + 20} fill="currentColor" />
         </motion.div>
