@@ -9,6 +9,14 @@ const images = [
   '/images/Screenshot_20260516_083758_Telegram.jpg'
 ];
 
+const romanticMusic = [
+  { name: "Clair de Lune", url: "https://archive.org/download/DebussyClairDeLune/Debussy-ClairDeLune.mp3" },
+  { name: "Moonlight Sonata", url: "https://archive.org/download/BeethovenMoonlightSonata_201801/Beethoven%20-%20Moonlight%20Sonata%20%281st%20Movement%29.mp3" },
+  { name: "Chopin Nocturne", url: "https://archive.org/download/ChopinNocturneOp9No2/Chopin%20-%20Nocturne%20Op.%209%20No.%202.mp3" },
+  { name: "Gymnopédie No.1", url: "https://archive.org/download/GymnopedieNo.1/Satie%20-%20Gymnopedie%20No.1.mp3" },
+  { name: "Liebestraum No. 3", url: "https://archive.org/download/LisztLiebestraumNo.3/Liszt%20-%20Liebestraum%20No.3.mp3" }
+];
+
 const content = {
   en: {
     title: "Expression of Radiance",
@@ -167,8 +175,15 @@ function App() {
   const [progress, setProgress] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [hasPlayed, setHasPlayed] = useState(false);
+  const [currentSong, setCurrentSong] = useState(romanticMusic[0]);
   const audioRef = useRef(null);
   const t = content[lang];
+
+  useEffect(() => {
+    // Pick a random song on mount
+    const randomSong = romanticMusic[Math.floor(Math.random() * romanticMusic.length)];
+    setCurrentSong(randomSong);
+  }, []);
 
   const handleStart = () => {
     setLoading(true);
@@ -224,7 +239,7 @@ function App() {
         loop
         preload="auto"
         onPlay={() => setHasPlayed(true)}
-        src="https://www.mfiles.co.uk/mp3-downloads/claude-debussy-clair-de-lune.mp3"
+        src={currentSong.url}
       />
       <div className="vignette" />
       <FloatingHearts />
@@ -304,9 +319,12 @@ function App() {
                     onClick={() => {
                       audioRef.current?.play().then(() => setHasPlayed(true));
                     }}
-                    className="flex items-center gap-2 px-4 py-2 bg-pink-500/20 text-pink-300 rounded-full border border-pink-500/30 hover:bg-pink-500/30 transition-all text-sm mb-4"
+                    className="flex flex-col items-center gap-2 px-6 py-3 bg-pink-500/10 text-pink-300 rounded-2xl border border-pink-500/20 hover:bg-pink-500/20 transition-all text-sm mb-4 backdrop-blur-sm"
                   >
-                    <Volume2 size={16} /> Tap to Enable Romantic Music
+                    <div className="flex items-center gap-2">
+                      <Volume2 size={18} /> Tap to Hear: {currentSong.name}
+                    </div>
+                    <span className="text-[10px] opacity-50 uppercase tracking-widest">Romantic Classical Shuffle</span>
                   </motion.button>
                 )}
 
