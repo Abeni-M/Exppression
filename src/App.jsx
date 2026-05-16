@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Stars, Sparkles, Languages, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Heart, Stars, Sparkles, Languages, ChevronRight, ChevronLeft, Volume2, VolumeX } from 'lucide-react';
 
 const images = [
   '/images/IMG_20260515_220747_899.jpg',
@@ -166,10 +166,16 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+  const audioRef = useRef(null);
   const t = content[lang];
 
   const handleStart = () => {
     setLoading(true);
+    // Try to play audio when user interacts
+    if (audioRef.current) {
+      audioRef.current.play().catch(e => console.log("Audio play blocked:", e));
+    }
     let p = 0;
     const interval = setInterval(() => {
       p += 5;
@@ -196,29 +202,48 @@ function App() {
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-pink-500/30 overflow-x-hidden relative">
+      <audio 
+        ref={audioRef}
+        loop
+        src="https://www.mfiles.co.uk/mp3-downloads/claude-debussy-clair-de-lune.mp3"
+      />
       <div className="vignette" />
       <FloatingHearts />
+      {/* Global Controls - Fixed in Top Corner */}
+      <div className="fixed top-6 right-6 z-[999] flex flex-col md:flex-row items-end md:items-center gap-3">
+        {/* Audio Toggle */}
+        <button 
+          onClick={() => {
+            if (audioRef.current) {
+              const nextMuted = !isMuted;
+              audioRef.current.muted = nextMuted;
+              setIsMuted(nextMuted);
+            }
+          }}
+          className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 transition-all shadow-lg backdrop-blur-md"
+          title={isMuted ? "Unmute" : "Mute"}
+        >
+          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+        </button>
 
-      {/* Global Language Toggle - Fixed in Top Corner to prevent any overlap */}
-      <div className="fixed top-6 right-6 z-[999] flex gap-3">
-        <button
-          onClick={() => setLang('en')}
-          className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${lang === 'en'
-              ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(212,175,55,0.4)]'
-              : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
-            }`}
-        >
-          EN
-        </button>
-        <button
-          onClick={() => setLang('am')}
-          className={`px-5 py-2 rounded-full border text-sm font-semibold amharic transition-all duration-300 ${lang === 'am'
-              ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(212,175,55,0.4)]'
-              : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
-            }`}
-        >
-          አማርኛ
-        </button>
+        <div className="flex gap-2">
+          <button 
+            onClick={() => setLang('en')}
+            className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${lang === 'en' 
+              ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(212,175,55,0.4)]' 
+              : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'}`}
+          >
+            EN
+          </button>
+          <button 
+            onClick={() => setLang('am')}
+            className={`px-5 py-2 rounded-full border text-sm font-semibold amharic transition-all duration-300 ${lang === 'am' 
+              ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(212,175,55,0.4)]' 
+              : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'}`}
+          >
+            አማርኛ
+          </button>
+        </div>
       </div>
 
       <AnimatePresence mode="wait">
