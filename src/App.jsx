@@ -165,8 +165,8 @@ function App() {
   const [started, setStarted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
+  const [hasPlayed, setHasPlayed] = useState(false);
   const audioRef = useRef(null);
   const t = content[lang];
 
@@ -203,10 +203,10 @@ function App() {
   // Handle first interaction to bypass autoplay restrictions
   useEffect(() => {
     const playOnInteraction = () => {
-      if (audioRef.current && !started) {
-        audioRef.current.play().catch(e => console.log("Still blocked"));
-        window.removeEventListener('click', playOnInteraction);
-        window.removeEventListener('touchstart', playOnInteraction);
+      if (audioRef.current && !hasPlayed) {
+        audioRef.current.play()
+          .then(() => setHasPlayed(true))
+          .catch(e => console.log("Still blocked"));
       }
     };
     window.addEventListener('click', playOnInteraction);
@@ -215,7 +215,7 @@ function App() {
       window.removeEventListener('click', playOnInteraction);
       window.removeEventListener('touchstart', playOnInteraction);
     };
-  }, [started]);
+  }, [hasPlayed]);
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-pink-500/30 overflow-x-hidden relative">
@@ -223,7 +223,8 @@ function App() {
         ref={audioRef}
         loop
         preload="auto"
-        src="https://archive.org/download/DebussyClairDeLune/Debussy%20-%20Clair%20de%20Lune.mp3"
+        onPlay={() => setHasPlayed(true)}
+        src="https://www.mfiles.co.uk/mp3-downloads/claude-debussy-clair-de-lune.mp3"
       />
       <div className="vignette" />
       <FloatingHearts />
@@ -295,7 +296,21 @@ function App() {
               </h1>
               <p className={`text-gray-400 mb-12 italic text-xl md:text-2xl ${lang === 'am' ? 'amharic' : ''}`}>{t.subtitle}</p>
 
-              <div className="relative flex justify-center">
+              <div className="flex flex-col items-center gap-6">
+                {!hasPlayed && (
+                  <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    onClick={() => {
+                      audioRef.current?.play().then(() => setHasPlayed(true));
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 bg-pink-500/20 text-pink-300 rounded-full border border-pink-500/30 hover:bg-pink-500/30 transition-all text-sm mb-4"
+                  >
+                    <Volume2 size={16} /> Tap to Enable Romantic Music
+                  </motion.button>
+                )}
+
+                <div className="relative flex justify-center w-full">
                 <AnimatePresence mode="wait">
                   {!loading ? (
                     <motion.button
