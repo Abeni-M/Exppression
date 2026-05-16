@@ -200,12 +200,30 @@ function App() {
     }
   }, [started]);
 
+  // Handle first interaction to bypass autoplay restrictions
+  useEffect(() => {
+    const playOnInteraction = () => {
+      if (audioRef.current && !started) {
+        audioRef.current.play().catch(e => console.log("Still blocked"));
+        window.removeEventListener('click', playOnInteraction);
+        window.removeEventListener('touchstart', playOnInteraction);
+      }
+    };
+    window.addEventListener('click', playOnInteraction);
+    window.addEventListener('touchstart', playOnInteraction);
+    return () => {
+      window.removeEventListener('click', playOnInteraction);
+      window.removeEventListener('touchstart', playOnInteraction);
+    };
+  }, [started]);
+
   return (
     <div className="min-h-screen bg-black text-white selection:bg-pink-500/30 overflow-x-hidden relative">
       <audio 
         ref={audioRef}
         loop
-        src="https://www.mfiles.co.uk/mp3-downloads/claude-debussy-clair-de-lune.mp3"
+        preload="auto"
+        src="https://archive.org/download/DebussyClairDeLune/Debussy%20-%20Clair%20de%20Lune.mp3"
       />
       <div className="vignette" />
       <FloatingHearts />
